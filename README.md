@@ -1,6 +1,5 @@
-[lexcerise1: ogstash](exercise-1).
-
-[eexcerise2: lasticsearch](exercise-2).
+[[Excerise1: ogstash](exercise-1)]
+[[Excerise2: lasticsearch](exercise-2)]
 
 ### Exercise0 : Install ELK 
 
@@ -34,7 +33,7 @@ type=rpm-md
 
 ##### 2.2 Install logstash
 ```
-sudo yum install logstash
+sudo yum install logstash -y
 ```
 
 ##### 2.3 Start logstash service
@@ -62,7 +61,7 @@ type=rpm-md
 
 ##### 3.2 Install Elasticsearch
 ```
-sudo yum -y install elasticsearch
+sudo yum -y install elasticsearch -y 
 ```
 
 ##### 3.3 Start elasticsearch service
@@ -91,6 +90,11 @@ enabled=1
 autorefresh=1
 type=rpm-md
 ' > /etc/yum.repos.d/kibana.repo
+```
+
+##### 4.2 install kibana
+```
+yum install kibana -y
 ```
 
 ##### 4.2 edit config
