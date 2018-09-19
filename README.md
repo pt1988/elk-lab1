@@ -4,8 +4,39 @@
 yum install java -y
 ```
 
+
+
 #### 2. Install logstash
+
+##### 2.0.1 Add Public Signature key
 ```
+rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+```
+
+##### 2.1 Add repository
+```
+echo '
+[logstash-6.x] 
+name=Elastic repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+' > /etc/yum.repos.d/elasticsearch.repo
+```
+
+##### 2.2 Install logstash
+```
+sudo yum install logstash
+```
+
+##### 2.3 Start logstash service
+```
+sudo systemctl start logstash
+sudo systemctl status logstash
+sudo systemctl enable logstash 
 ```
 
 #### 3. Install Elasticsearch
@@ -26,22 +57,50 @@ type=rpm-md
 
 ##### 3.2 Install Elasticsearch
 ```
-yum -y install elasticsearch
+sudo yum -y install elasticsearch
 ```
 
 ##### 3.3 Start elasticsearch service
 ```
 #start service
-systemctl start elasticsearch 
+sudo systemctl start elasticsearch 
 
 #check service status
-systemctl status elasticsearch
+sudo systemctl status elasticsearch
 
-#start elasticsearch on boot
-systemctl enable elasticsearch
+#enable elasticsearch start on boot
+sudo systemctl enable elasticsearch
 ```
 
-4. Install Kibana
+####4. Install Kibana
+
+##### 4.1 Add kibana repository
+```
+echo '
+[kibana-6.x]
+name=Kibana repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+' > /etc/yum.repos.d/kibana.repo
+```
+
+##### 4.2 start kibana service
+```
+# start kibana
+sudo systemctl start kibana
+
+# check kibana service status
+sudo systemctl status kibana
+
+# enable kibana start onboot
+sudo systemctl enable kibana 
+```
+
+
+#####
 ```
 ```
-### 
