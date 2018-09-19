@@ -1,5 +1,5 @@
-[[Excerise1: ogstash](exercise-1)]
-[[Excerise2: lasticsearch](exercise-2)]
+[[Excerise1: logstash](exercise-1)]
+[[Excerise2: elasticsearch](exercise-2)]
 
 ### Exercise0 : Install ELK 
 
@@ -7,7 +7,6 @@
 ```
 yum install java -y
 ```
-
 
 
 #### 2. Install logstash
@@ -38,10 +37,16 @@ sudo yum install logstash -y
 
 ##### 2.3 Start logstash service
 ```
+#start logstash serivce with systemd 
 sudo systemctl start logstash
+
+#check logstash service status
 sudo systemctl status logstash
+
+#enable logstash auto start onboot
 sudo systemctl enable logstash 
 ```
+
 
 #### 3. Install Elasticsearch
 
@@ -76,7 +81,13 @@ sudo systemctl status elasticsearch
 sudo systemctl enable elasticsearch
 ```
 
-####4. Install Kibana
+##### 3.4 test elasticsearch http rest api
+```
+curl 127.0.0.1:9200
+```
+
+
+#### 4. Install Kibana
 
 ##### 4.1 Add kibana repository
 ```
@@ -124,4 +135,9 @@ sudo systemctl enable kibana
 ```
 firewall-cmd --add-port 5601/tcp --zone=public --permanent
 firewall-cmd --reload
+```
+
+check kibana http service
+```
+curl [externalIP]:5601
 ```
