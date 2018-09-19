@@ -1,4 +1,7 @@
-### Exercise1 : Install ELK
+excerise1 : logstash[a relative link](exercise-1)
+excerise2 : elasticsearch[a relative link](exercise-2)
+### Exercise0 : Install ELK 
+
 #### 1. Install Java
 ```
 yum install java -y
@@ -88,7 +91,18 @@ type=rpm-md
 ' > /etc/yum.repos.d/kibana.repo
 ```
 
-##### 4.2 start kibana service
+##### 4.2 edit config
+###### edit server host
+open file /etc/kibana/kibana.yml 
+```
+vim /etc/kibana/kibana.yml 
+```
+replace line server.host parameter from localhost to 0.0.0.0
+```
+server.host : 0.0.0.0 
+``` 
+
+##### 4.3 start kibana service
 ```
 # start kibana
 sudo systemctl start kibana
@@ -100,7 +114,8 @@ sudo systemctl status kibana
 sudo systemctl enable kibana 
 ```
 
-
-#####
+##### 4.4 config firewall to open tcp port 5601 for kibana
 ```
+firewall-cmd --add-port 5601/tcp --zone=public --permanent
+firewall-cmd --reload
 ```
