@@ -21,17 +21,17 @@ cp access.log /var/log
 #### 1.1. Run logstash with command line
 Using logstash to read logfile(/var/log/access.log) and process and print to screen.
 
-show logstash path
+Show logstash path
 ```
 whereis logstash
 ```
 
-show logstash help
+Show logstash help
 ```
 /usr/share/logstash/bin/logstash -h
 ```
 
-run logstash 
+Run logstash 
 ```
 /usr/share/logstash/bin/logstash -f logstash-stdout.conf
 ```
@@ -39,19 +39,23 @@ run logstash
 #### 1.2. Run logstash with systemd 
 Using logstash to read logfile(/var/log/access.log) to process and store to Elasticsearch.
 
-copy to logstash config to logstash-systemd configuration directory
+Copy to logstash config to logstash-systemd configuration directory
 ```
 mkdir /etc/logstash/conf.d/
 cp logstash-elasticsearch.conf /etc/logstash/conf.d/
 ```
 
-restart logstash service
+Restart logstash service
 ```
 systemctl restart logstash
 ```
 
-check logstash status
+Check logstash status
 ```
 systemctl logstash status
 ```
 
+Troubleshooting logstash
+```
+tail /var/log/logstash/logstash-plain.log -f
+```
