@@ -1,6 +1,6 @@
-## Exercise 1 : Process web access log
+## Exercise 1 : Process web access log with logstash
 
-#### 1.0. Preparation
+#### 1.0. Setup environment
 
 ##### 1.0.1. git clone project from gitlab
 ```
@@ -21,17 +21,17 @@ cp access.log /var/log
 #### 1.1. Run logstash with command line
 Using logstash to read logfile(/var/log/access.log) and process and print to screen.
 
-Show logstash path
+1.1.1) Show logstash path
 ```
 whereis logstash
 ```
 
-Show logstash help
+1.1.2) Show logstash help
 ```
 /usr/share/logstash/bin/logstash -h
 ```
 
-Run logstash 
+1.1.3) Run logstash 
 ```
 /usr/share/logstash/bin/logstash -f logstash-stdout.conf
 ```
@@ -39,23 +39,23 @@ Run logstash
 #### 1.2. Run logstash with systemd 
 Using logstash to read logfile(/var/log/access.log) to process and store to Elasticsearch.
 
-Copy to logstash config to logstash-systemd configuration directory
+1.2.1) Copy to logstash config to logstash-systemd configuration directory
 ```
 mkdir /etc/logstash/conf.d/
 cp logstash-elasticsearch.conf /etc/logstash/conf.d/
 ```
 
-Restart logstash service
+1.2.2) Restart logstash service
 ```
 systemctl restart logstash
 ```
 
-Check logstash status
+1.2.3) Check logstash status
 ```
 systemctl logstash status
 ```
 
-Troubleshooting logstash
+1.2.4) Troubleshooting logstash
 ```
 tail /var/log/logstash/logstash-plain.log -f
 ```
