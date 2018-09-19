@@ -1,5 +1,5 @@
-excerise1 : logstash[a relative link](exercise-1)
-excerise2 : elasticsearch[a relative link](exercise-2)
+[lexcerise1: ogstash](exercise-1).
+[eexcerise2: lasticsearch](exercise-2).
 ### Exercise0 : Install ELK 
 
 #### 1. Install Java
