@@ -74,7 +74,7 @@ sudo systemctl status elasticsearch
 sudo systemctl enable elasticsearch
 ```
 
-##### 3.3 test elasticsearch http rest api
+##### 3.3 test elasticsearch's http rest api
 ```
 curl 127.0.0.1:9200
 ```
@@ -100,9 +100,9 @@ sudo systemctl status kibana
 sudo systemctl enable kibana 
 ```
 
-check kibana http service
+#### 4.3 test kibana's http service
 ```
-curl [externalIP]:5601
+curl 127.0.0.1:5601
 ```
 
 #### 5. Setup nginx revers proxy with basic authentication
