@@ -3,20 +3,20 @@
 
 ### Exercise0 : Install ELK 
 
-#### 1. Install Java
+#### 1. Setup Environment. 
+
+##### 1.1 Install Java.
+
 ```
 yum install java -y
 ```
 
-
-#### 2. Install logstash
-
-##### 2.0.1 Add Public Signature key
+##### 1.2 Add Elastic's Public Signature key
 ```
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 ```
 
-##### 2.1 Add repository
+##### 1.3 Add repository
 ```
 echo '
 [logstash-6.x] 
@@ -27,15 +27,19 @@ gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
 enabled=1
 autorefresh=1
 type=rpm-md
-' > /etc/yum.repos.d/elasticsearch.repo
+' > /etc/yum.repos.d/elastic.repo
 ```
 
-##### 2.2 Install logstash
+
+#### 2. Install logstash
+[reference](https://www.elastic.co/guide/en/logstash/current/installing-logstash.html)
+
+##### 2.1 Install logstash
 ```
 sudo yum install logstash -y
 ```
 
-##### 2.3 Start logstash service
+##### 2.2 Start logstash service
 ```
 #start logstash serivce with systemd 
 sudo systemctl start logstash
@@ -49,27 +53,15 @@ sudo systemctl enable logstash
 
 
 #### 3. Install Elasticsearch
+[reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/rpm.html)
 
-##### 3.1 Add Elasticsearch Repository 
-```
-echo '
-[elasticsearch-6.x]
-name=Elasticsearch repository for 6.x packages
-baseurl=https://artifacts.elastic.co/packages/6.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-' > /etc/yum.repos.d/elasticsearch.repo 
-```
 
-##### 3.2 Install Elasticsearch
+##### 3.1 Install Elasticsearch
 ```
 sudo yum -y install elasticsearch -y 
 ```
 
-##### 3.3 Start elasticsearch service
+##### 3.2 Start elasticsearch service
 ```
 #start service
 sudo systemctl start elasticsearch 
@@ -81,45 +73,21 @@ sudo systemctl status elasticsearch
 sudo systemctl enable elasticsearch
 ```
 
-##### 3.4 test elasticsearch http rest api
+##### 3.3 test elasticsearch http rest api
 ```
 curl 127.0.0.1:9200
 ```
 
-
 #### 4. Install Kibana
+[refference](https://www.elastic.co/guide/en/kibana/current/rpm.html)
 
-##### 4.1 Add kibana repository
-```
-echo '
-[kibana-6.x]
-name=Kibana repository for 6.x packages
-baseurl=https://artifacts.elastic.co/packages/6.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-' > /etc/yum.repos.d/kibana.repo
-```
 
-##### 4.2 install kibana
+##### 4.1 install kibana
 ```
 yum install kibana -y
 ```
 
-##### 4.2 edit config
-###### edit server host
-open file /etc/kibana/kibana.yml 
-```
-vim /etc/kibana/kibana.yml 
-```
-replace line server.host parameter from localhost to 0.0.0.0
-```
-server.host : 0.0.0.0 
-``` 
-
-##### 4.3 start kibana service
+##### 4.2 start kibana service
 ```
 # start kibana
 sudo systemctl start kibana
@@ -131,13 +99,51 @@ sudo systemctl status kibana
 sudo systemctl enable kibana 
 ```
 
-##### 4.4 config firewall to open tcp port 5601 for kibana
+check kibana http service
+```
+curl [externalIP]:5601
+```
+
+#### 5. Install nginx revers proxy with basic authentication
+
+##### 5.1) install nginx
+[reference](https://community.openhab.org/t/using-nginx-reverse-proxy-authentication-and-https/14542).
+
+```
+yum install -y epel-release
+yum install -y nginx
+```
+
+##### 5.2) Add config
+
+Open file "/etc/nginx/nginx.conf" and add reverse proxy config to session http { server { location / { [config] }}} 
+```
+vim /etc/nginx/nginx.conf
+```
+
+Reverse proxy configuration
+```
+location / {
+		proxy_pass                            http://localhost:8080/;
+		proxy_buffering                       off;
+		proxy_set_header Host                 $http_host;
+		proxy_set_header X-Real-IP            $remote_addr;
+		proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto    $scheme;
+                auth_basic                            "Username and Password Required";
+                auth_basic_user_file                  /etc/nginx/.htpasswd;
+}
+```
+
+##### 5.3) Create username and password for http basic authentication
+
+```
+htpasswd -c  /etc/nginx/.htpasswd admin
+```
+
+##### 5.4) config firewall to allow port http 80
 ```
 firewall-cmd --add-port 5601/tcp --zone=public --permanent
 firewall-cmd --reload
 ```
 
-check kibana http service
-```
-curl [externalIP]:5601
-```
