@@ -6,21 +6,23 @@
 
 #### 1. Setup Environment. 
 
-##### 1.1 Install Java.
+##### 1.1 Disable SE Linux
+
+##### 1.2 Install Java.
 
 ```
 yum install java -y
 ```
 
-##### 1.2 Add Elastic's Public Signature key
+##### 1.3 Add Elastic's Public Signature key
 ```
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 ```
 
-##### 1.3 Add repository
+##### 1.4 Add repository
 ```
 echo '
-[elasticsearch-6.x] 
+[elk-6.x] 
 name=Elastic repository for 6.x packages
 baseurl=https://artifacts.elastic.co/packages/6.x/yum
 gpgcheck=1
@@ -125,7 +127,7 @@ vim /etc/nginx/nginx.conf
 Copy this configuration place in file nginx.conf
 ```
 location / {
-		proxy_pass                            http://localhost:8080/;
+		proxy_pass                            http://localhost:5601/;
 		proxy_buffering                       off;
 		proxy_set_header Host                 $http_host;
 		proxy_set_header X-Real-IP            $remote_addr;
