@@ -12,6 +12,8 @@
 
 ```
 yum install java -y
+yum install httpd-tools -y
+
 ```
 
 ##### 1.3 Add Elastic's Public Signature key
