@@ -12,8 +12,6 @@
 
 ```
 yum install java -y
-yum install httpd-tools -y
-
 ```
 
 ##### 1.3 Add Elastic's Public Signature key
@@ -143,6 +141,7 @@ location / {
 ##### 5.3) Create username and password for http basic authentication
 
 ```
+sudo yum install -y httpd-tools
 htpasswd -c  /etc/nginx/.htpasswd admin
 ```
 
