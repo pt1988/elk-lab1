@@ -2,9 +2,15 @@
 
 #### 1 Setup environment
 
-##### 1.1) git clone project from gitlab
+##### 1.1 a) git clone project from gitlab
 ```
 git clone https://gitlab.com/pt1988/elk-lab1.git
+cd elk-lab1/exercise-1
+```
+
+##### 1.1 b) alternative method (clone from intranet)
+```
+git clone root:changeit@10.3.132.179:~/elk-lab1  #password: changeit
 cd elk-lab1/exercise-1
 ```
 
