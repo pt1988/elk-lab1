@@ -84,7 +84,7 @@ curl 127.0.0.1:9200
 
 ##### 4.1 install kibana
 ```
-yum install kibana -y
+apt-get install kibana -y
 ```
 
 ##### 4.2 start kibana service
