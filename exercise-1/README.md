@@ -58,7 +58,7 @@ systemctl restart logstash
 
 ##### 3.3) Check logstash status
 ```
-systemctl logstash status
+systemctl status logstash
 ```
 
 ##### 3.4) Troubleshooting logstash
