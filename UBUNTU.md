@@ -1,5 +1,3 @@
-[[ubuntu](UBUNTU.md)]
-
 [[Excerise1: logstash](exercise-1)]
 [[Excerise2: elasticsearch](exercise-2)]
 [[Excerise3: elasticsearch](exercise-3)]
@@ -13,31 +11,21 @@
 sudo echo "158.108.8.148 artifacts.elastic.co" >> /etc/hosts
 ```
 
-##### 1.1 Disable SE Linux
-
-##### 1.2 Install Java.
+##### 1.1 Install prerequisite packets.
 
 ```
-yum install java -y
+sudo apt install default-jre
+sudo apt-get install apt-transport-https
 ```
 
-##### 1.3 Add Elastic Public Signature key
+##### 1.2 Add Elastic Public Signature key
 ```
-rpm --import http://artifacts.elastic.co:8080/GPG-KEY-elasticsearch
+sudo wget -qO - http://artifacts.elastic.co:8080/GPG-KEY-elasticsearch | sudo apt-key add 
 ```
 
 ##### 1.4 Add repository
 ```
-echo '
-[elk-6.x] 
-name=Elastic repository for 6.x packages
-baseurl=http://artifacts.elastic.co:8080/packages/6.x/yum
-gpgcheck=1
-gpgkey=http://artifacts.elastic.co:8080/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-' > /etc/yum.repos.d/elastic.repo
+sudo echo "deb http://artifacts.elastic.co:8080/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
 ```
 
 
@@ -46,7 +34,7 @@ type=rpm-md
 
 ##### 2.1 Install logstash
 ```
-sudo yum install logstash -y
+sudo apt-get update && sudo apt-get install logstash -y
 ```
 
 ##### 2.2 Start logstash service
@@ -63,12 +51,12 @@ sudo systemctl enable logstash
 
 
 #### 3. Install Elasticsearch
-[[reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/rpm.html)]
+[[reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html)]
 
 
 ##### 3.1 Install Elasticsearch
 ```
-sudo yum -y install elasticsearch -y 
+sudo apt install elasticsearch -y 
 ```
 
 ##### 3.2 Start elasticsearch service
@@ -83,7 +71,7 @@ sudo systemctl status elasticsearch
 sudo systemctl enable elasticsearch
 ```
 
-##### 3.3 test elasticsearch's http rest api
+##### 3.3 test elasticsearch rest api
 ```
 curl 127.0.0.1:9200
 ```
@@ -109,7 +97,7 @@ sudo systemctl status kibana
 sudo systemctl enable kibana 
 ```
 
-#### 4.3 test kibana's http service
+#### 4.3 test kibana service
 ```
 curl 127.0.0.1:5601
 ```
@@ -120,15 +108,14 @@ curl 127.0.0.1:5601
 [[reference](https://community.openhab.org/t/using-nginx-reverse-proxy-authentication-and-https/14542)]
 
 ```
-yum install -y epel-release
-yum install -y nginx
+sudo apt install -y nginx
 ```
 
 ##### 5.2) Add config
 
 Open file "/etc/nginx/nginx.conf" and add reverse proxy config to session http { server { location / { [config] }}} 
 ```
-vim /etc/nginx/nginx.conf
+sudo vim /etc/nginx/sites-available/default
 ```
 
 Copy this configuration place in file nginx.conf
@@ -148,8 +135,8 @@ location / {
 ##### 5.3) Create username and password for http basic authentication
 
 ```
-sudo yum install -y httpd-tools
-htpasswd -c /etc/nginx/.htpasswd admin
+sudo apt install apache2-utils
+sudo htpasswd -c  /etc/nginx/.htpasswd admin
 ```
 
 ##### 5.4 start kibana service
