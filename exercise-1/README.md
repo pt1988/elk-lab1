@@ -10,7 +10,7 @@ cd elk-lab1/exercise-1
 
 ##### 1.1 b) alternative method (clone from intranet)
 ```
-git clone root:changeit@10.3.132.179:~/elk-lab1  #password: changeit
+git clone git@10.3.132.179:~/elk-lab1  #password: git
 cd elk-lab1/exercise-1
 ```
 
