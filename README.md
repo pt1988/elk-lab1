@@ -1,8 +1,10 @@
-[[ubuntu](UBUNTU.md)]
+[[Install ELK on Ubuntu](UBUNTU.md)]
 
 [[Excerise1: logstash](exercise-1)]
 [[Excerise2: elasticsearch](exercise-2)]
 [[Excerise3: elasticsearch](exercise-3)]
+
+## Install ELK on CentOS7
 
 ### Exercise0 : Install ELK 
 
